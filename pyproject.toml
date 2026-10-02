@@ -1,0 +1,21 @@
+[project]
+name = "coordsys"
+version = "0.1.0"
+description = "Практическое и домашнее задание: системы координат и однородные координаты"
+readme = "README.md"
+authors = [
+    { name = "dpetrovv", email = "dpetrovv@sdvor.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.0",
+    "matplotlib>=3.9",
+    "pyqt6>=6.11.0",
+]
+
+[project.scripts]
+coordsys = "coordsys.app:main"
+
+[build-system]
+requires = ["uv_build>=0.12.22,<0.13.0"]
+build-backend = "uv_build"
