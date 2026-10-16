@@ -5,7 +5,6 @@ import matplotlib
 matplotlib.use("QtAgg")
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
-from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
     QButtonGroup,
     QDoubleSpinBox,
@@ -60,7 +59,7 @@ class SpaceTransformMode(QWidget):
         layout.addWidget(self.canvas, stretch=3)
 
         # 2. Панель управления
-        panel = QFrame()
+        panel = QFrame(self)
         panel.setStyleSheet(
             "QFrame { background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; }"
             "QGroupBox { font-weight: bold; border: 1px solid #cbd5e1; border-radius: 6px; margin-top: 10px; padding-top: 12px; }"
@@ -118,21 +117,21 @@ class SpaceTransformMode(QWidget):
 
         # Сдвиг
         l_trans.addWidget(QLabel("dx:"), 0, 0)
-        self.spin_dx = QDoubleSpinBox()
+        self.spin_dx = QDoubleSpinBox(self)
         self.spin_dx.setRange(-10.0, 10.0)
         self.spin_dx.setValue(1.0)
         self.spin_dx.setSingleStep(0.5)
         l_trans.addWidget(self.spin_dx, 0, 1)
 
         l_trans.addWidget(QLabel("dy:"), 0, 2)
-        self.spin_dy = QDoubleSpinBox()
+        self.spin_dy = QDoubleSpinBox(self)
         self.spin_dy.setRange(-10.0, 10.0)
         self.spin_dy.setValue(1.0)
         self.spin_dy.setSingleStep(0.5)
         l_trans.addWidget(self.spin_dy, 0, 3)
 
         l_trans.addWidget(QLabel("dz:"), 0, 4)
-        self.spin_dz = QDoubleSpinBox()
+        self.spin_dz = QDoubleSpinBox(self)
         self.spin_dz.setRange(-10.0, 10.0)
         self.spin_dz.setValue(1.0)
         self.spin_dz.setSingleStep(0.5)
@@ -148,7 +147,7 @@ class SpaceTransformMode(QWidget):
 
         # Поворот
         l_trans.addWidget(QLabel("Угол (°):"), 1, 0)
-        self.spin_angle = QDoubleSpinBox()
+        self.spin_angle = QDoubleSpinBox(self)
         self.spin_angle.setRange(-360.0, 360.0)
         self.spin_angle.setValue(30.0)
         self.spin_angle.setSingleStep(5.0)
@@ -164,7 +163,7 @@ class SpaceTransformMode(QWidget):
 
         # Масштаб
         l_trans.addWidget(QLabel("Масштаб:"), 2, 0)
-        self.spin_scale = QDoubleSpinBox()
+        self.spin_scale = QDoubleSpinBox(self)
         self.spin_scale.setRange(0.1, 5.0)
         self.spin_scale.setValue(1.2)
         self.spin_scale.setSingleStep(0.1)
@@ -190,13 +189,13 @@ class SpaceTransformMode(QWidget):
         panel_layout.addWidget(grp_trans)
 
         # Координаты вершин
-        grp_coords = QGroupBox("Координаты вершин (3D)")
-        l_coords = QVBoxLayout(grp_coords)
-        self.txt_coords = QTextEdit()
-        self.txt_coords.setReadOnly(True)
-        self.txt_coords.setStyleSheet("font-family: Consolas, monospace; font-size: 10px; background-color: #f8fafc; border: 1px solid #e2e8f0;")
-        l_coords.addWidget(self.txt_coords)
-        panel_layout.addWidget(grp_coords)
+        grp_vertices = QGroupBox("Координаты вершин (3D)")
+        l_vertices = QVBoxLayout(grp_vertices)
+        self.txt_vertices = QTextEdit(self)
+        self.txt_vertices.setReadOnly(True)
+        self.txt_vertices.setStyleSheet("font-family: Consolas, monospace; font-size: 10px; background-color: #f8f9fa; border: 1px solid #e2e8f0;")
+        l_vertices.addWidget(self.txt_vertices)
+        panel_layout.addWidget(grp_vertices)
 
         layout.addWidget(panel, stretch=2)
 
@@ -252,7 +251,7 @@ class SpaceTransformMode(QWidget):
         ]
         for i, (x, y, z) in enumerate(self.vertices):
             lines.append(f"  P{i}: ({x:+6.2f}, {y:+6.2f}, {z:+6.2f})")
-        self.txt_coords.setText("\n".join(lines))
+        self.txt_vertices.setText("\n".join(lines))
 
     def _redraw(self) -> None:
         draw3d.setup_axes(self.ax, self.handedness)

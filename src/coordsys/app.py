@@ -14,8 +14,8 @@ from coordsys.modes.mode3_space import SpaceTransformMode
 
 
 class CoordSysMainWindow(QMainWindow):
-    def __init__(self) -> None:
-        super().__init__()
+    def __init__(self, parent: QWidget | None = None) -> None:
+        super().__init__(parent)
         self.setWindowTitle("Системы координат и однородные координаты")
         self.resize(1150, 750)
         self.setMinimumSize(900, 600)
@@ -24,8 +24,8 @@ class CoordSysMainWindow(QMainWindow):
 
     def _build_ui(self) -> None:
         self.setStyleSheet(
-            "QMainWindow { background-color: #f8fafc; }"
-            "QWidget { font-family: 'Segoe UI', -apple-system, sans-serif; color: #0f172a; }"
+            "QMainWindow { background-color: #f8f9fa; }"
+            "QWidget { font-family: sans-serif; color: #0f172a; }"
             "QTabWidget::pane { border: 1px solid #e2e8f0; background: #ffffff; border-radius: 6px; }"
             "QTabBar::tab { font-size: 13px; font-weight: bold; padding: 10px 22px; background: #e2e8f0; color: #475569; margin-right: 4px; border-top-left-radius: 6px; border-top-right-radius: 6px; }"
             "QTabBar::tab:selected { background: #ffffff; color: #1e293b; border: 1px solid #e2e8f0; border-bottom: none; }"
@@ -37,7 +37,7 @@ class CoordSysMainWindow(QMainWindow):
         layout = QVBoxLayout(central_widget)
         layout.setContentsMargins(12, 12, 12, 12)
 
-        self.tabs = QTabWidget()
+        self.tabs = QTabWidget(central_widget)
 
         self.mode1 = GuessOrientationMode(self)
         self.mode2 = PlaneTransformMode(self)
@@ -51,10 +51,7 @@ class CoordSysMainWindow(QMainWindow):
 
 
 def main() -> None:
-    app = QApplication.instance()
-    if app is None:
-        app = QApplication(sys.argv)
-
+    app = QApplication(sys.argv)
     window = CoordSysMainWindow()
     window.show()
     sys.exit(app.exec())

@@ -63,7 +63,7 @@ class GuessOrientationMode(QWidget):
         layout.addWidget(self.canvas, stretch=3)
 
         # 2. Панель управления
-        panel = QFrame()
+        panel = QFrame(self)
         panel.setStyleSheet(
             "QFrame { background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; }"
         )
