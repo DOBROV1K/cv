@@ -1,11 +1,3 @@
-"""Главное окно приложения: PyQt6 с вкладками для всех трёх режимов.
-
-Светлая тема интерфейса, строгое академическое оформление без смайликов.
-Работает на Windows, macOS и Linux.
-"""
-
-from __future__ import annotations
-
 import sys
 
 from PyQt6.QtWidgets import (
@@ -22,8 +14,6 @@ from coordsys.modes.mode3_space import SpaceTransformMode
 
 
 class CoordSysMainWindow(QMainWindow):
-    """Главное окно приложения."""
-
     def __init__(self) -> None:
         super().__init__()
         self.setWindowTitle("Системы координат и однородные координаты")
@@ -61,7 +51,6 @@ class CoordSysMainWindow(QMainWindow):
 
 
 def main() -> None:
-    """Точка входа приложения."""
     app = QApplication.instance()
     if app is None:
         app = QApplication(sys.argv)

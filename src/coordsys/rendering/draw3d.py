@@ -1,15 +1,3 @@
-"""Отрисовка 3D-сцены: оси, направление поворота вокруг каждой оси, объект.
-
-Как и в 2D (см. ``draw2d.py``), ориентация влияет только на отрисовку, а не
-на саму математику поворота. Правая система — оси X, Y, Z расположены по
-правилу правой руки. Левая система получается отражением оси Z (на экране её
-направление инвертируется) — при этом положительные повороты вокруг X и Y
-меняют видимое направление на противоположное, а вокруг Z — остаётся прежним
-(это стандартное следствие однократного отражения одной оси).
-"""
-
-from __future__ import annotations
-
 import numpy as np
 from matplotlib.axes import Axes
 
@@ -18,9 +6,6 @@ from coordsys.core.shapes import Point3D
 
 AXIS_LENGTH = 3.0
 
-# Для каждой оси вращения указываем две "соседние" оси, в плоскости которых
-# рисуется дуга положительного поворота (по правилу правой руки: поворот
-# вокруг X идёт от Y к Z, вокруг Y — от Z к X, вокруг Z — от X к Y).
 _ROTATION_PLANES = {
     "x": (1, 2),
     "y": (2, 0),
@@ -30,22 +15,12 @@ _AXIS_NAMES = ("X", "Y", "Z")
 
 
 def setup_axes(ax: Axes, handedness: Handedness, *, show_orientation: bool = True) -> None:
-    """Готовит 3D-оси: пределы, подписи, при необходимости — дуги поворота.
-
-    Args:
-        ax: 3D-оси matplotlib (``projection="3d"``).
-        handedness: правая или левая система координат.
-        show_orientation: если False, дуги положительного поворота не рисуются
-            (режим 1, где ориентацию нужно угадать по виду осей).
-    """
-
     ax.clear()
     limit = AXIS_LENGTH * 1.2
     ax.set_xlim(-limit, limit)
     ax.set_ylim(-limit, limit)
     ax.set_zlim(-limit, limit)
 
-    # Левая система координат получается отражением оси Z.
     z_sign = 1.0 if handedness is Handedness.RIGHT else -1.0
 
     axis_vectors = {
@@ -63,13 +38,6 @@ def setup_axes(ax: Axes, handedness: Handedness, *, show_orientation: bool = Tru
 
 
 def _draw_rotation_hint(ax: Axes, axis_name: str, axis_vectors: dict[str, np.ndarray]) -> None:
-    """Рисует дугу положительного поворота вокруг заданной оси.
-
-    Направление дуги определяется фактическим (возможно отражённым)
-    положением двух "соседних" осей — поэтому для левой системы дуга
-    сама по себе развернётся в нужную сторону без отдельных условий.
-    """
-
     i, j = _ROTATION_PLANES[axis_name]
     u = axis_vectors[_AXIS_NAMES[i].lower()] / AXIS_LENGTH
     v = axis_vectors[_AXIS_NAMES[j].lower()] / AXIS_LENGTH
@@ -85,14 +53,6 @@ def _draw_rotation_hint(ax: Axes, axis_name: str, axis_vectors: dict[str, np.nda
 
 
 def draw_basis_vectors(ax: Axes, vectors: dict[str, np.ndarray]) -> None:
-    """Рисует три произвольных базисных вектора (для режима 1 — угадайки).
-
-    В отличие от ``setup_axes``, векторы здесь могут быть повёрнуты на
-    произвольный угол и, возможно, отражены — ориентацию нужно определить
-    по рисунку, поэтому никаких подсказок (дуг поворота, подписи CW/CCW)
-    не рисуется.
-    """
-
     ax.clear()
     limit = AXIS_LENGTH * 1.2
     ax.set_xlim(-limit, limit)
@@ -111,7 +71,6 @@ def draw_wireframe(
     *,
     color: str = "tab:red",
 ) -> None:
-    """Рисует каркасный объект по вершинам и рёбрам (списку пар индексов)."""
 
     for a, b in edges:
         xs = [vertices[a][0], vertices[b][0]]
@@ -121,7 +80,5 @@ def draw_wireframe(
 
 
 def format_points(points: list[Point3D]) -> str:
-    """Форматирует список 3D-точек для информационной панели."""
-
     lines = [f"  P{i}: ({x:+.2f}, {y:+.2f}, {z:+.2f})" for i, (x, y, z) in enumerate(points)]
     return "\n".join(lines)

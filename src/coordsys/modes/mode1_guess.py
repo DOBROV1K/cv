@@ -1,12 +1,3 @@
-"""Режим 1 — задание с практики: определение ориентации трехмерной системы координат.
-
-Случайным образом генерируется правая или левая 3D-система координат и случайный поворот.
-Отрисовываются координатные оси. Пользователь выбирает «Правая» или «Левая»,
-приложение сообщает «Верно» или «Неверно».
-"""
-
-from __future__ import annotations
-
 import numpy as np
 import matplotlib
 matplotlib.use("QtAgg")
@@ -28,7 +19,7 @@ from coordsys.transforms import manual as transforms
 
 
 def _rotated_basis(trial: RandomTrial) -> dict[str, np.ndarray]:
-    """Строит три повернутых базисных вектора для текущего испытания."""
+    #Строит три повернутых вектора
     z_sign = 1.0 if trial.handedness is Handedness.RIGHT else -1.0
     base_points = [
         (draw3d.AXIS_LENGTH, 0.0, 0.0),

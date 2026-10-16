@@ -1,14 +1,3 @@
-"""Режим 3 — интерактивное 3D-преобразование объекта в однородных координатах (PyQt6).
-
-Аналогично режиму 2, но в трёхмерном пространстве:
-  - объект: каркасный 3D-домик (core.shapes.demo_wireframe_3d);
-  - для каждой из трёх осей показано направление положительного поворота вокруг неё;
-  - пользователь может выбирать ось вращения (X, Y или Z);
-  - сдвиг (dx, dy, dz), поворот и масштабирование рассчитываются в однородных координатах 4×4.
-"""
-
-from __future__ import annotations
-
 import math
 from types import ModuleType
 
@@ -45,7 +34,7 @@ _BACKENDS: dict[str, ModuleType] = {
 
 
 class SpaceTransformMode(QWidget):
-    """Виджет Режима 3: 3D-преобразования в однородных координатах."""
+    #Виджет Режима 3: 3D-преобразования в однородных координатах
 
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
@@ -81,7 +70,7 @@ class SpaceTransformMode(QWidget):
         panel_layout.setContentsMargins(15, 15, 15, 15)
         panel_layout.setSpacing(10)
 
-        # Группа 1: Ориентация
+        # Ориентация
         grp_orient = QGroupBox("Ориентация системы координат")
         l_orient = QVBoxLayout(grp_orient)
         self.rb_right = QRadioButton("Правая (X × Y = Z)")
@@ -92,7 +81,7 @@ class SpaceTransformMode(QWidget):
         l_orient.addWidget(self.rb_left)
         panel_layout.addWidget(grp_orient)
 
-        # Группа 2: Способ расчёта
+        # Способ расчёта
         grp_calc = QGroupBox("Способ расчёта")
         l_calc = QVBoxLayout(grp_calc)
         self.rb_manual = QRadioButton("Ручной (матрицы 4×4)")
@@ -103,7 +92,7 @@ class SpaceTransformMode(QWidget):
         l_calc.addWidget(self.rb_numpy)
         panel_layout.addWidget(grp_calc)
 
-        # Группа 3: Ось вращения
+        # Ось вращения
         grp_axis = QGroupBox("Ось вращения")
         l_axis = QHBoxLayout(grp_axis)
         self.rb_axis_x = QRadioButton("X")
@@ -122,7 +111,7 @@ class SpaceTransformMode(QWidget):
         l_axis.addWidget(self.rb_axis_z)
         panel_layout.addWidget(grp_axis)
 
-        # Группа 4: Аффинные преобразования 3D
+        # преобразования 3D
         grp_trans = QGroupBox("Преобразования 3D")
         l_trans = QGridLayout(grp_trans)
         l_trans.setSpacing(6)
@@ -200,7 +189,7 @@ class SpaceTransformMode(QWidget):
 
         panel_layout.addWidget(grp_trans)
 
-        # Группа 5: Координаты вершин
+        # Координаты вершин
         grp_coords = QGroupBox("Координаты вершин (3D)")
         l_coords = QVBoxLayout(grp_coords)
         self.txt_coords = QTextEdit()

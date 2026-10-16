@@ -1,17 +1,3 @@
-"""Режим 2 — интерактивное 2D-преобразование объекта в однородных координатах (PyQt6).
-
-Пользователь выбирает:
-  - ориентацию системы координат (правая / левая);
-  - способ расчёта (ручной — transforms.manual, или библиотека numpy — transforms.library).
-
-Отображается стандартный вид осей координат с подписанным положительным направлением
-вращения (по часовой стрелке или против).
-Объект трансформируется в однородных координатах:
-сдвиг, поворот и масштабирование. В информационной панели показаны точные координаты вершин.
-"""
-
-from __future__ import annotations
-
 import math
 from types import ModuleType
 
@@ -47,7 +33,7 @@ _BACKENDS: dict[str, ModuleType] = {
 
 
 class PlaneTransformMode(QWidget):
-    """Виджет Режима 2: 2D-преобразования в однородных координатах."""
+    #2D-преобразования в однородных координатах.
 
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
@@ -80,7 +66,7 @@ class PlaneTransformMode(QWidget):
         panel_layout.setContentsMargins(15, 15, 15, 15)
         panel_layout.setSpacing(12)
 
-        # Группа 1: Ориентация системы координат
+        # Ориентация системы координат
         grp_orient = QGroupBox("Ориентация системы координат")
         l_orient = QVBoxLayout(grp_orient)
         self.rb_right = QRadioButton("Правая (против часовой стрелки, CCW)")
@@ -91,7 +77,7 @@ class PlaneTransformMode(QWidget):
         l_orient.addWidget(self.rb_left)
         panel_layout.addWidget(grp_orient)
 
-        # Группа 2: Способ расчёта однородных координат
+        # Способ расчёта однородных координат
         grp_calc = QGroupBox("Способ расчёта")
         l_calc = QVBoxLayout(grp_calc)
         self.rb_manual = QRadioButton("Ручной (матрицы списков)")
@@ -102,7 +88,7 @@ class PlaneTransformMode(QWidget):
         l_calc.addWidget(self.rb_numpy)
         panel_layout.addWidget(grp_calc)
 
-        # Группа 3: Преобразования
+        # Преобразования
         grp_trans = QGroupBox("Преобразования")
         l_trans = QGridLayout(grp_trans)
         l_trans.setSpacing(8)
@@ -173,7 +159,7 @@ class PlaneTransformMode(QWidget):
 
         panel_layout.addWidget(grp_trans)
 
-        # Группа 4: Координаты вершин
+        # Координаты вершин
         grp_coords = QGroupBox("Координаты вершин")
         l_coords = QVBoxLayout(grp_coords)
         self.txt_coords = QTextEdit()
